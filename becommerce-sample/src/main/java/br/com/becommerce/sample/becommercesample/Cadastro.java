@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Cadastro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	private String nome;
@@ -44,4 +44,13 @@ public class Cadastro {
 		this.dtCriacao = dtCriacao;
 	}
 
+	public Cadastro() {
+		super();
+	}
+
+	public Cadastro(String nome) {
+		this.nome = nome;
+		this.dtCriacao = new Date();
+	}
+	
 }
