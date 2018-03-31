@@ -1,8 +1,6 @@
 OPERAÇÕES
 ===========================================
 
-Descrição
----------
 **GET**
 
 curl localhost:8080/cadastro
