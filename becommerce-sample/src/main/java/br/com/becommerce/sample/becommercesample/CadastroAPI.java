@@ -34,7 +34,7 @@ public class CadastroAPI {
 	}
 	
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<?> update(@PathVariable("id") Long id) {
+	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		if (id == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
