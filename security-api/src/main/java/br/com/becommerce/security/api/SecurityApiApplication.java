@@ -1,4 +1,4 @@
-package br.com.becommerce.security.api.securityapi;
+package br.com.becommerce.security.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
