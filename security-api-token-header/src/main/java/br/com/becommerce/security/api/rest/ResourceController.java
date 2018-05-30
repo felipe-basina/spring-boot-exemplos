@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceController {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	
 	@GetMapping
 	public String resource() {
 		logger.info("resource operation /api/resource");
