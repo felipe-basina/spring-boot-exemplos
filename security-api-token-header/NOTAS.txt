@@ -1,0 +1,7 @@
+-- Endpoints para testes:
+localhost:8080/api
+localhost:8080/api/resource
+
+-- Parâmetros a serem adicionados no cabeçalho
+auth_token
+auth_user

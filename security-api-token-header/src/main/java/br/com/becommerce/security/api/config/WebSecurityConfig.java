@@ -54,9 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		APIKeyAuthFilter2 filter = new APIKeyAuthFilter2(principalRequestHeader, principalRequestValue);
+		APIKeyAuthFilter2 filter = new APIKeyAuthFilter2(this.principalRequestHeader, this.principalRequestValue);
 		filter.setAuthenticationManager(new AuthenticationManager() {
-
 			@Override
 			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 				TokenCredential tokenCredential = (TokenCredential) authentication.getPrincipal();
@@ -68,7 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 		});
 		
-		httpSecurity.antMatcher("/api/**").csrf().disable().sessionManagement()
+		//httpSecurity.antMatcher("/api/**").csrf().disable().sessionManagement()
+		httpSecurity.antMatcher("/api/**").sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilter(filter).authorizeRequests()
 				.anyRequest().authenticated();
 	}
