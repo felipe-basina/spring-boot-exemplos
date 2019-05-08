@@ -1,6 +1,5 @@
 package br.com.becommerce.sample.becommercesample;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class CadastroAPI {
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<Cadastro> getAll() {
+	public Iterable<Cadastro> getAll() {
 		return this.cadastroRepositorio.findAll();
 	}
 	

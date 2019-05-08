@@ -52,5 +52,13 @@ public class Cadastro {
 		this.nome = nome;
 		this.dtCriacao = new Date();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[id=").append(id).append(", nome=").append(nome).append(", dtCriacao=").append(dtCriacao)
+				.append("]");
+		return builder.toString();
+	}
 	
 }
