@@ -30,4 +30,40 @@ public class DefaultArithRequestVO implements DefaultArithParams {
 		this.arithOperations = arithOperations;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DefaultArithRequestVO [numbers=").append(numbers).append(", arithOperations=")
+				.append(arithOperations).append("]");
+		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((arithOperations == null) ? 0 : arithOperations.hashCode());
+		result = prime * result + ((numbers == null) ? 0 : numbers.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DefaultArithRequestVO other = (DefaultArithRequestVO) obj;
+		if (arithOperations != other.arithOperations)
+			return false;
+		if (numbers == null) {
+			if (other.numbers != null)
+				return false;
+		} else if (!numbers.equals(other.numbers))
+			return false;
+		return true;
+	}
+
 }
