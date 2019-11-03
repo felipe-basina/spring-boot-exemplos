@@ -5,7 +5,10 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -36,12 +39,11 @@ public class ClientArithService {
 	}
 
 	public ArithResponseVO<?> doArithOperation(ArithParams arithParams) {
-		final String url = this.getFullUrl(arithParams.arithOperation());
-		final String jsonBody = this.createJsonBody(arithParams);
-		logger.info("Calling {} with {}", url, jsonBody);
-
 		try {
-			ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(url, jsonBody, String.class);
+			final String url = this.getFullUrl(arithParams.arithOperation());
+			HttpEntity<String> entity = this.createHttpEntity(url, arithParams);
+			
+			ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(url, entity, String.class);
 			if (this.successResponse(responseEntity)) {
 				return new ArithResponseVO<BigDecimal>(responseEntity.getStatusCode().value(),
 						new BigDecimal(responseEntity.getBody()));
@@ -51,6 +53,16 @@ public class ClientArithService {
 			logger.error("Error calling external service: {}", e.getMessage(), e);
 			return new ArithResponseVO<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
+	}
+	
+	private HttpEntity<String> createHttpEntity(String url, ArithParams arithParams) {
+		final String jsonBody = this.createJsonBody(arithParams);
+		logger.info("Calling {} with {}", url, jsonBody);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		return new HttpEntity<String>(jsonBody ,headers);
 	}
 
 	private String getFullUrl(ArithOperations arithOperations) {
