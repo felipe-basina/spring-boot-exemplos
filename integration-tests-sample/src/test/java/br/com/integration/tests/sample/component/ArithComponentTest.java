@@ -1,7 +1,5 @@
 package br.com.integration.tests.sample.component;
 
-import static org.junit.Assert.fail;
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +18,7 @@ import br.com.integration.tests.sample.services.ClientArithService;
 import br.com.integration.tests.sample.types.ArithOperations;
 import br.com.integration.tests.sample.vo.ArithResponseVO;
 import br.com.integration.tests.sample.vo.DefaultArithRequestVO;
+import br.com.integration.tests.sample.vo.PowerArithRequestVO;
 
 @RunWith(value = MockitoJUnitRunner.class)
 public class ArithComponentTest {
@@ -95,23 +94,85 @@ public class ArithComponentTest {
 	}
 
 	@Test
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void testSubtract() {
-		fail("Not yet implemented");
+		List<BigDecimal> values = this.values();
+		
+		DefaultArithRequestVO request = this.createDefaultArithRequestVO(values, ArithOperations.SUBTRACT);
+		ArithResponseVO response = this.createSuccessArithResponseVO(BigDecimal.valueOf(130));
+		
+		Mockito.when(this.clientArithService.doArithOperation(request)).thenReturn(response);
+		
+		ArithResponseVO<BigDecimal> arithResponseVO = (ArithResponseVO<BigDecimal>) this.arithComponent.subtract(values);
+		Assert.assertNotNull(arithResponseVO);
+		Assert.assertNotNull(arithResponseVO.getResult());
+		Assert.assertEquals(HttpStatus.CREATED.value(), arithResponseVO.getHttpStatusCode());
+		Assert.assertEquals(response.getResult(), arithResponseVO.getResult());
+		
+		Mockito.verify(this.clientArithService, Mockito.times(1)).doArithOperation(request);
+		Mockito.verifyNoMoreInteractions(this.clientArithService);
 	}
 
 	@Test
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void testMultiply() {
-		fail("Not yet implemented");
+		List<BigDecimal> values = this.values();
+		
+		DefaultArithRequestVO request = this.createDefaultArithRequestVO(values, ArithOperations.MULTIPLY);
+		ArithResponseVO response = this.createSuccessArithResponseVO(BigDecimal.valueOf(130));
+		
+		Mockito.when(this.clientArithService.doArithOperation(request)).thenReturn(response);
+		
+		ArithResponseVO<BigDecimal> arithResponseVO = (ArithResponseVO<BigDecimal>) this.arithComponent.multiply(values);
+		Assert.assertNotNull(arithResponseVO);
+		Assert.assertNotNull(arithResponseVO.getResult());
+		Assert.assertEquals(HttpStatus.CREATED.value(), arithResponseVO.getHttpStatusCode());
+		Assert.assertEquals(response.getResult(), arithResponseVO.getResult());
+		
+		Mockito.verify(this.clientArithService, Mockito.times(1)).doArithOperation(request);
+		Mockito.verifyNoMoreInteractions(this.clientArithService);
 	}
 
 	@Test
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void testDivide() {
-		fail("Not yet implemented");
+		List<BigDecimal> values = this.values();
+		
+		DefaultArithRequestVO request = this.createDefaultArithRequestVO(values, ArithOperations.DIVISION);
+		ArithResponseVO response = this.createSuccessArithResponseVO(BigDecimal.valueOf(130));
+		
+		Mockito.when(this.clientArithService.doArithOperation(request)).thenReturn(response);
+		
+		ArithResponseVO<BigDecimal> arithResponseVO = (ArithResponseVO<BigDecimal>) this.arithComponent.divide(values);
+		Assert.assertNotNull(arithResponseVO);
+		Assert.assertNotNull(arithResponseVO.getResult());
+		Assert.assertEquals(HttpStatus.CREATED.value(), arithResponseVO.getHttpStatusCode());
+		Assert.assertEquals(response.getResult(), arithResponseVO.getResult());
+		
+		Mockito.verify(this.clientArithService, Mockito.times(1)).doArithOperation(request);
+		Mockito.verifyNoMoreInteractions(this.clientArithService);
 	}
 
 	@Test
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void testPower() {
-		fail("Not yet implemented");
+		BigDecimal value = BigDecimal.valueOf(10);
+		int power = 2;
+		
+		PowerArithRequestVO request = this.createPowerArithRequestVO(value, power);
+		ArithResponseVO response = this.createSuccessArithResponseVO(BigDecimal.valueOf(100));
+		
+		Mockito.when(this.clientArithService.doArithOperation(request)).thenReturn(response);
+		
+		ArithResponseVO<BigDecimal> arithResponseVO = (ArithResponseVO<BigDecimal>) this.arithComponent.power(value,
+				power);
+		Assert.assertNotNull(arithResponseVO);
+		Assert.assertNotNull(arithResponseVO.getResult());
+		Assert.assertEquals(HttpStatus.CREATED.value(), arithResponseVO.getHttpStatusCode());
+		Assert.assertEquals(response.getResult(), arithResponseVO.getResult());
+		
+		Mockito.verify(this.clientArithService, Mockito.times(1)).doArithOperation(request);
+		Mockito.verifyNoMoreInteractions(this.clientArithService);
 	}
 	
 	private List<BigDecimal> values() {
@@ -121,6 +182,10 @@ public class ArithComponentTest {
 	private DefaultArithRequestVO createDefaultArithRequestVO(List<BigDecimal> values,
 			ArithOperations arithOperations) {
 		return new DefaultArithRequestVO(values, arithOperations);
+	}
+	
+	private PowerArithRequestVO createPowerArithRequestVO(BigDecimal value, int power) {
+		return new PowerArithRequestVO(value, power);
 	}
 	
 	private ArithResponseVO<BigDecimal> createSuccessArithResponseVO(BigDecimal total) {
