@@ -1,5 +1,6 @@
 package br.com.integration.tests.sample.services;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 
 import org.slf4j.Logger;
@@ -16,10 +17,12 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import br.com.integration.tests.sample.types.ArithOperations;
 import br.com.integration.tests.sample.vo.ArithParams;
 import br.com.integration.tests.sample.vo.ArithResponseVO;
+import br.com.integration.tests.sample.vo.ResultVO;
 
 @Service
 public class ClientArithService {
@@ -32,6 +35,8 @@ public class ClientArithService {
 	private String baseUrl;
 
 	private Gson gson;
+	
+	private Type resultVOType = new TypeToken<ResultVO>() {}.getType();
 
 	public ClientArithService() {
 		this.restTemplate = new RestTemplate();
@@ -44,11 +49,13 @@ public class ClientArithService {
 			HttpEntity<String> entity = this.createHttpEntity(url, arithParams);
 			
 			ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(url, entity, String.class);
+			ResultVO resultVO = this.convertResponse(responseEntity.getBody());
+			
 			if (this.successResponse(responseEntity)) {
 				return new ArithResponseVO<BigDecimal>(responseEntity.getStatusCode().value(),
-						new BigDecimal(responseEntity.getBody()));
+						new BigDecimal(resultVO.getResult()));
 			}
-			return new ArithResponseVO<String>(responseEntity.getStatusCode().value(), responseEntity.getBody());
+			return new ArithResponseVO<String>(responseEntity.getStatusCode().value(), resultVO.getResult());
 		} catch (RestClientException e) {
 			logger.error("Error calling external service: {}", e.getMessage(), e);
 			return new ArithResponseVO<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
@@ -63,6 +70,10 @@ public class ClientArithService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		return new HttpEntity<String>(jsonBody ,headers);
+	}
+	
+	private ResultVO convertResponse(final String responseBody) {
+		return this.gson.fromJson(responseBody, this.resultVOType);
 	}
 
 	private String getFullUrl(ArithOperations arithOperations) {
