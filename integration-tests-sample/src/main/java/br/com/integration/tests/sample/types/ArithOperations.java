@@ -5,7 +5,7 @@ public enum ArithOperations {
 	SUM("/sum"), 
 	SUBTRACT("/subtract"), 
 	MULTIPLY("/multiply"), 
-	DIVISION("/divison"), 
+	DIVISION("/divide"), 
 	POWER("/power");
 	
 	private String remoteOperation;
