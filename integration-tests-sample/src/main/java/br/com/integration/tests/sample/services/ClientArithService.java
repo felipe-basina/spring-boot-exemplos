@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.integration.tests.sample.exceptions.LocalClientResponseException;
+import br.com.integration.tests.sample.handlers.LocalResponseErrorHandler;
 import br.com.integration.tests.sample.types.ArithOperations;
 import br.com.integration.tests.sample.vo.ArithParams;
 import br.com.integration.tests.sample.vo.ArithResponseVO;
@@ -45,7 +46,7 @@ public class ClientArithService {
 
 	@Autowired
 	public ClientArithService(
-			@Qualifier(value = "localResponseErrorHandler") ResponseErrorHandler responseErrorHandler) {
+			@Qualifier(value = LocalResponseErrorHandler.QUALIFIER_VALUE) ResponseErrorHandler responseErrorHandler) {
 		this.responseErrorHandler = responseErrorHandler;
 		this.restTemplate = new RestTemplate();
 		this.restTemplate.setErrorHandler(this.responseErrorHandler);

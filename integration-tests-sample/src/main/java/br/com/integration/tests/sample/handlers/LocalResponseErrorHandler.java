@@ -15,8 +15,10 @@ import org.springframework.web.client.ResponseErrorHandler;
 import br.com.integration.tests.sample.exceptions.LocalClientResponseException;
 
 @Component
-@Qualifier(value = "localResponseErrorHandler")
+@Qualifier(value = LocalResponseErrorHandler.QUALIFIER_VALUE)
 public class LocalResponseErrorHandler implements ResponseErrorHandler {
+	
+	public static final String QUALIFIER_VALUE = "localResponseErrorHandler";
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
