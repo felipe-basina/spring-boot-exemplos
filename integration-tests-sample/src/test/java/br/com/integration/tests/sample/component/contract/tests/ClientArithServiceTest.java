@@ -100,7 +100,6 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testDivideByZero() {
 		List<BigDecimal> values = this.values();
 		values = new ArrayList<>(values);
@@ -108,8 +107,7 @@ public class ClientArithServiceTest {
 
 		ArithParams arithParams = this.createDefaultArithParams(values, ArithOperations.DIVISION);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertFalse(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
