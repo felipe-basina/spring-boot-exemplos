@@ -54,12 +54,11 @@ public class ClientArithService {
 	}
 
 	public ArithResponseVO<?> doArithOperation(ArithParams arithParams) {
-		ResponseEntity<String> responseEntity = null;
 		try {
 			final String url = this.getFullUrl(arithParams.arithOperation());
 			HttpEntity<String> entity = this.createHttpEntity(url, arithParams);
 			
-			responseEntity = this.restTemplate.postForEntity(url, entity, String.class);
+			ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(url, entity, String.class);
 			ResultVO resultVO = this.convertResponse(responseEntity.getBody());
 			
 			return new ArithResponseVO<>(responseEntity.getStatusCode().value(),
