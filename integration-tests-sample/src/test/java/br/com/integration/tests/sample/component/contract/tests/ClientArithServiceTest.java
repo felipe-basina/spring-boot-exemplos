@@ -34,12 +34,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void testSum() {
 		ArithParams arithParams = this.createDefaultArithParams(this.values(), ArithOperations.SUM);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertTrue(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
@@ -47,12 +45,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testSumEmptyList() {
 		ArithParams arithParams = this.createDefaultArithParams(Collections.emptyList(), ArithOperations.SUM);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertFalse(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
@@ -60,12 +56,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testSumInvalidList() {
 		ArithParams arithParams = this.createDefaultArithParams(null, ArithOperations.SUM);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertFalse(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
@@ -73,12 +67,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testSubtract() {
 		ArithParams arithParams = this.createDefaultArithParams(this.values(), ArithOperations.SUBTRACT);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertTrue(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
@@ -86,12 +78,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testMultiply() {
 		ArithParams arithParams = this.createDefaultArithParams(this.values(), ArithOperations.MULTIPLY);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertTrue(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
@@ -99,12 +89,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testDivide() {
 		ArithParams arithParams = this.createDefaultArithParams(this.values(), ArithOperations.DIVISION);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertTrue(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
@@ -129,12 +117,10 @@ public class ClientArithServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked" })
 	public void testPower() {
 		ArithParams arithParams = this.createPowerArithParams(BigDecimal.valueOf(10), 2);
 
-		ArithResponseVO<?> arithResponseVO = (ArithResponseVO<BigDecimal>) this.clientArithService
-				.doArithOperation(arithParams);
+		ArithResponseVO<?> arithResponseVO = this.clientArithService.doArithOperation(arithParams);
 		Assert.assertNotNull(arithResponseVO);
 		Assert.assertNotNull(arithResponseVO.getResult());
 		Assert.assertTrue(this.isSuccessHttpResponse(arithResponseVO.getHttpStatusCode()));
