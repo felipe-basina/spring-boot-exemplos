@@ -78,7 +78,7 @@ public class ClientArithService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		
-		return new HttpEntity<>(jsonBody ,headers);
+		return new HttpEntity<>(jsonBody, headers);
 	}
 	
 	private ResultVO convertResponse(final String responseBody) {
