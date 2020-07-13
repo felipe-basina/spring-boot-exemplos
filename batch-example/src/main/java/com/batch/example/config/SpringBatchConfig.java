@@ -34,7 +34,7 @@ public class SpringBatchConfig {
     private String databaseServer;
 
     @Value(value = "${application.db.port}")
-    private int databasePort;
+    private String databasePort;
 
     @Value(value = "${application.db.schema}")
     private String databaseSchema;
@@ -49,7 +49,9 @@ public class SpringBatchConfig {
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(this.databaseDriverName);
-        dataSource.setUrl(String.format("jdbc:mysql://%s:%d/%s", this.databaseServer, this.databasePort, this.databaseSchema));
+        dataSource.setUrl(String.format("jdbc:mysql://%s:%d/%s", this.databaseServer,
+                Integer.parseInt(this.databasePort),
+                this.databaseSchema));
         dataSource.setUsername(this.databaseUser);
         dataSource.setPassword(this.databasePassword);
         return dataSource;
