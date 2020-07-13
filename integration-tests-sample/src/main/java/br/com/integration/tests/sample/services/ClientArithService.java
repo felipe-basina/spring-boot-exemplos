@@ -54,20 +54,19 @@ public class ClientArithService {
 	}
 
 	public ArithResponseVO<?> doArithOperation(ArithParams arithParams) {
-		ResponseEntity<String> responseEntity = null;
 		try {
 			final String url = this.getFullUrl(arithParams.arithOperation());
 			HttpEntity<String> entity = this.createHttpEntity(url, arithParams);
 			
-			responseEntity = this.restTemplate.postForEntity(url, entity, String.class);
+			ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(url, entity, String.class);
 			ResultVO resultVO = this.convertResponse(responseEntity.getBody());
 			
-			return new ArithResponseVO<BigDecimal>(responseEntity.getStatusCode().value(),
+			return new ArithResponseVO<>(responseEntity.getStatusCode().value(),
 					new BigDecimal(resultVO.getResult()));
 		} catch (Exception e) {
 			LocalClientResponseException localClientResponseException = (LocalClientResponseException) e.getCause().getCause();
 			ResultVO resultVO = this.convertResponse(localClientResponseException.getErrorMessage());
-			return new ArithResponseVO<String>(localClientResponseException.getStatusCode(), resultVO.getResult());
+			return new ArithResponseVO<>(localClientResponseException.getStatusCode(), resultVO.getResult());
 		}
 	}
 	
@@ -79,7 +78,7 @@ public class ClientArithService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		
-		return new HttpEntity<String>(jsonBody ,headers);
+		return new HttpEntity<>(jsonBody, headers);
 	}
 	
 	private ResultVO convertResponse(final String responseBody) {
