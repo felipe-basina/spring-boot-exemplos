@@ -1,5 +1,7 @@
 package com.batch.example.config;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,6 +17,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.file.FlatFileHeaderCallback;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.LineMapper;
@@ -176,6 +179,12 @@ public class SpringBatchConfig {
 	public FlatFileItemWriter<Employee> writerToFile(@Value(value = "${application.output.file}") FileSystemResource resource) {
 		FlatFileItemWriter<Employee> writer = new FlatFileItemWriter<Employee>();
 		writer.setResource(resource);
+		writer.setHeaderCallback(new FlatFileHeaderCallback() {
+			@Override
+			public void writeHeader(Writer writer) throws IOException {
+				writer.write("id,name,department,salary,timestamp");
+			}
+		});
 		writer.setLineAggregator(new DelimitedLineAggregator<Employee>() {
 			{
 				setDelimiter(",");
